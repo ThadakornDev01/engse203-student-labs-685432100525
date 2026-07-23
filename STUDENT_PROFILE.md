@@ -3,10 +3,10 @@
 | รายการ | ข้อมูล |
 |---|---|
 | รายวิชา | ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์ |
-| รหัสนักศึกษา | STUDENT-ID |
-| ชื่อ-นามสกุล | ชื่อ-นามสกุล |
-| Section | SEC-X |
-| GitHub Username | GITHUB-USERNAME |
-| Repository | `engse203-student-labs-STUDENT-ID` |
-
-> ไฟล์นี้จะถูกปรับข้อมูลเมื่อรัน `npm run setup`
+| รหัสนักศึกษา | 685432100525 |
+| ชื่อ-นามสกุล | ธดากรณ์ เชื้อโต่ง |
+| Section | SEC2 |
+| GitHub Username | somchai-github |
+| Repository | `engse203-student-labs-685432100525` |
+| Mode | `migration` |
+| Pages Hub | https://somchai-github.github.io/engse203-student-labs-685432100525/ |
