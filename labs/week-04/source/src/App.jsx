@@ -1,41 +1,60 @@
-import { useState } from 'react';
 import AppHeader from './components/AppHeader.jsx';
 import SummaryPanel from './components/SummaryPanel.jsx';
-import TaskForm from './components/TaskForm.jsx';
+import RequestForm from './components/RequestForm.jsx';
 import FilterBar from './components/FilterBar.jsx';
-import TaskList from './components/TaskList.jsx';
-import { initialTasks } from './data/initialTasks.js';
+import RequestList from './components/RequestList.jsx';
+import { initialRequests } from './data/initialRequests.js';
+import { useState } from 'react';
 
 function App() {
-  const [tasks, setTasks] = useState(initialTasks);
+  // TODO LAB4-R04: เปลี่ยน requests/statusFilter เป็น state
+  const [requests, setRequests] = useState(initialRequests);
   const [statusFilter, setStatusFilter] = useState('all');
-  
-  const summary = {
-    total: tasks.length,
-    todo: tasks.filter((task) => task.status === 'todo').length,
-    doing: tasks.filter((task) => task.status === 'doing').length,
-    done: tasks.filter((task) => task.status === 'done').length,
-  };
-  const filteredTasks = statusFilter === 'all' ? tasks : tasks.filter((task) => task.status === statusFilter);
 
-  function handleAddTask(taskData) {
-    const newTask = { id: `TASK-${Date.now()}`, ...taskData, status: 'todo' };
-    setTasks((currentTasks) => [newTask, ...currentTasks]);
+  // TODO LAB4-R04: คำนวณ summary เป็น derived data
+  const summary = {
+    total: requests.length,
+    pending: requests.filter((r) => r.status === 'pending').length,
+    inProgress: requests.filter((r) => r.status === 'in-progress').length,
+    completed: requests.filter((r) => r.status === 'completed').length,
+  };
+
+  // TODO LAB4-R08: คำนวณ filteredRequests จาก requests + statusFilter
+  const filteredRequests = requests.filter((r) => statusFilter === 'all' || r.status === statusFilter);
+
+  function handleAddRequest(requestData) {
+    const newRequest = {
+      ...requestData,
+      id: `REQ-${Date.now()}`,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+    };
+    setRequests([newRequest, ...requests]);
   }
-    function handleDeleteTask(taskId) {
-    setTasks((currentTasks) => currentTasks.filter((task) => task.id !== taskId));
+
+  function handleDeleteRequest(requestId) {
+    setRequests(requests.filter((r) => r.id !== requestId));
   }
-  
+
   return (
     <>
-      <AppHeader title="Study Task Board" subtitle="CP05 — Callback delete และ Conditional Rendering" />
+      <AppHeader
+        title="Campus Service Request"
+        subtitle="LAB 4 Starter — เปลี่ยน DOM-driven UI เป็น State-driven React UI"
+      />
       <main className="container page-content">
         <SummaryPanel summary={summary} />
         <div className="workspace-grid">
-          <TaskForm onAddTask={handleAddTask} />
-          <section className="panel">
-            <FilterBar value={statusFilter} onFilterChange={setStatusFilter} />
-            <TaskList tasks={filteredTasks} onDeleteTask={handleDeleteTask} />
+          <RequestForm onAddRequest={handleAddRequest} />
+          <section className="panel" aria-labelledby="request-list-title">
+            <div className="section-heading">
+              <h2 id="request-list-title">รายการคำร้อง</h2>
+              <FilterBar value={statusFilter} onFilterChange={setStatusFilter} />
+            </div>
+            <RequestList
+              requests={filteredRequests}
+              onDeleteRequest={handleDeleteRequest}
+            />
           </section>
         </div>
       </main>
@@ -43,7 +62,4 @@ function App() {
   );
 }
 
-
-
 export default App;
-

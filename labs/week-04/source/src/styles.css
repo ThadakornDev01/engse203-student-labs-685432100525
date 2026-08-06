@@ -15,7 +15,7 @@
     --surface: #ffffff;
     --border: #c9d8eb;
     --muted: #5c6e86;
-    --danger: #b42318;
+    --danger: #fa5243;
 }
 
 body {
@@ -166,6 +166,29 @@ button:focus-visible {
     font-weight: 700;
 }
 
+.radio-group {
+    display: flex;
+    align-items: center;
+    /* บังคับให้อยู่กึ่งกลางแนวตั้งเสมอ */
+    gap: 8px;
+    /* ปรับระยะห่างระหว่างปุ่มกลมและข้อความตามต้องการ */
+}
+
+.radio-group label {
+    display: flex;
+    /* ใช้ flexbox เพื่อจัดเรียง input และ text ใน label */
+    align-items: center;
+    /* จัดให้ input และ text อยู่กึ่งกลางในแนวตั้ง */
+    gap: 0.5rem; /* แนะนำให้ลองลดระยะห่างลงมานิดนึง เช่น 0.5rem หรือ 8px */
+    font-weight: normal;
+    /* ยกเลิก font-weight: 750 ที่มาจาก selector label ทั่วไป */
+    white-space: nowrap; /* เพิ่มบรรทัดนี้เพื่อบังคับไม่ให้ตัวหนังสือตกบรรทัดเด็ดขาด */
+}
+
+.status.error {
+    color: var(--danger);
+}
+
 form>button,
 .filter-active {
     border: 0;
@@ -191,77 +214,81 @@ form>button,
     font-weight: 750;
 }
 
-.task-list {
+.request-list {
     display: grid;
     gap: .75rem;
 }
 
-.task-card {
+.request-card {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: .8rem;
     padding: 1rem;
     border: 1px solid var(--border);
-    border-radius: .8rem;
-    background: #f9fbfe;
+    border-radius: .9rem;
+    background: #ffffff;
 }
 
-.task-card h3 {
+.request-card-urgent {
+    border-left: .4rem solid var(--danger);
+    padding-left: .8rem;
+}
+
+.request-card h3 {
     margin: .45rem 0 .2rem;
     font-size: 1.05rem;
 }
 
-.task-card p {
+.request-card p {
     margin: 0;
     color: var(--muted);
 }
 
-.badge-row {
+.request-card .request-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: .35rem;
+    align-items: center;
+    gap: .75rem;
+    margin: .5rem 0;
+    font-size: .85rem;
 }
 
-.badge {
-    display: inline-flex;
-    border-radius: 999px;
-    padding: .22rem .55rem;
-    font-size: .78rem;
-    font-weight: 800;
-}
-
-.status-todo {
-    color: #7a4f01;
-    background: #fff1c2;
-}
-
-.status-doing {
-    color: #075985;
-    background: #dff3ff;
-}
-
-.status-done {
-    color: #166534;
-    background: #dcfce7;
-}
-
-.priority-high {
-    color: #991b1b;
-    background: #fee2e2;
-}
-
-.danger-button {
+.request-card button {
     flex: 0 0 auto;
     border: 0;
     border-radius: .55rem;
     padding: .55rem .75rem;
     color: var(--danger);
-    background: #feeceb;
+    background: #fae9e8;
     font-weight: 800;
 }
 
-.empty-state {
+.request-meta .status {
+    display: inline-flex;
+    border-radius: 999px;
+    padding: .22rem .55rem;
+    font-size: .78rem;
+    font-weight: 800;
+    min-height: unset;
+}
+
+.status-pending {
+    color: #7a4f01;
+    background: #fff1c2;
+}
+
+.status-in-progress {
+    color: #075985;
+    background: #dff3ff;
+}
+
+.status-completed {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.request-list-empty {
     padding: 1.5rem;
     border: 2px dashed var(--border);
     border-radius: .8rem;
