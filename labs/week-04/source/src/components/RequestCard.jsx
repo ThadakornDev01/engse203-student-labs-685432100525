@@ -1,34 +1,39 @@
 function RequestCard({ request, onDeleteRequest }) {
   
-  // ฟังก์ชันแปลง Priority เป็นภาษาไทย
+  // ฟังก์ชันแปลง Priority เป็นภาษาไทย (รองรับทั้งพิมพ์เล็กพิมพ์ใหญ่)
   const getPriorityLabel = (priority) => {
-    if (priority === 'urgent' || priority === 'high') return 'เร่งด่วน';
-    if (priority === 'normal') return 'ปกติ';
+    const p = priority?.toLowerCase();
+    if (p === 'urgent' || p === 'high') return 'เร่งด่วน';
+    if (p === 'normal') return 'ปกติ';
     return priority;
   };
 
   // ฟังก์ชันแปลง Status เป็นภาษาไทย
   const getStatusLabel = (status) => {
-    if (status === 'pending') return 'รอดำเนินการ';
-    if (status === 'in progress' || status === 'in_progress') return 'กำลังดำเนินการ';
-    if (status === 'completed') return 'เสร็จสิ้น';
+    const s = status?.toLowerCase();
+    if (s === 'pending') return 'รอดำเนินการ';
+    if (s === 'in progress' || s === 'in-progress' || s === 'in_progress') return 'กำลังดำเนินการ';
+    if (s === 'completed') return 'เสร็จสิ้น';
     return status;
   };
 
-  // แปลงคลาสของ status เผื่อกรณีที่มีเว้นวรรค (เช่น in progress -> in-progress)
-  const statusClass = request.status ? request.status.replace(/\s+/g, '-') : '';
+  // แปลง status และ priority ให้เป็น class name ที่ตรงกับ CSS เสมอ
+  const statusClass = request.status ? request.status.toLowerCase().replace(/\s+/g, '-') : '';
+  const priorityClass = request.priority ? request.priority.toLowerCase() : '';
 
   return (
     <article className="task-card">
-      {/* ส่วนหัวการ์ด (เรียง ID -> Priority -> Status -> ปุ่มลบ) */}
+      {/* ส่วนหัวการ์ด */}
       <div className="card-header">
         <span className="id">{request.id}</span>
         
-        <span className={`priority ${request.priority}`}>
+        {/* ป้าย Priority */}
+        <span className={`priority ${priorityClass}`}>
           {getPriorityLabel(request.priority)}
         </span>
         
-        <span className={`status ${statusClass}`}>
+        {/* ป้าย Status ใช้คลาส status-badge ให้ตรงกับ CSS */}
+        <span className={`status-badge ${statusClass}`}>
           {getStatusLabel(request.status)}
         </span>
         
@@ -40,7 +45,7 @@ function RequestCard({ request, onDeleteRequest }) {
         </button>
       </div>
       
-      {/* ส่วนเนื้อหาการ์ด จัดข้อความให้เหมือนของเพื่อน */}
+      {/* ส่วนเนื้อหาการ์ด */}
       <h3>{request.requestType}</h3>
       <p className="requester">ผู้แจ้ง: {request.requesterName}</p>
       <p className="location">สถานที่: {request.location}</p>

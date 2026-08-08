@@ -97,7 +97,8 @@ function TaskForm({ onAddTask }) {
           <select id="requestType" name="requestType" value={formData.requestType} onChange={handleChange}>
             <option value="">-- Select Request Type --</option>
             <option value="แจ้งซ่อม">แจ้งซ่อม</option>
-            <option value="ขอความช่วยเหลือ">ขอความช่วยเหลือ</option>
+            <option value="บริการบัญชีผู้ใช้">บริการบัญชีผู้ใช้</option>
+            <option value="ขอใช้ห้อง">ขอใช้ห้อง</option>
             <option value="อื่นๆ">อื่นๆ</option>
           </select>
           <small className="error" id="requestType-error">{errors.requestType}</small>
