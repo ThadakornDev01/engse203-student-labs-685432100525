@@ -30,6 +30,7 @@ const summary = {
   });
 
   function handleAddRequest(requestData) {
+    console.log('ข้อมูลที่ส่งมาเพิ่ม', requestData);
     setRequests((prevRequests) => [requestData, ...prevRequests]);
   }
 
@@ -48,7 +49,7 @@ const summary = {
       <main className="container page-content">
         <SummaryPanel summary={summary} />
         <div className="workspace-grid">
-          <RequestForm onAddRequest={handleAddRequest} />
+          <RequestForm onAddTask={handleAddRequest} />
           <section className="panel" aria-labelledby="request-list-title">
             <div className="section-heading">
               <h2 id="request-list-title">รายการคำร้อง</h2>

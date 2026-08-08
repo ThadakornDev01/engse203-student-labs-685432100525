@@ -336,3 +336,74 @@ fieldset.field label {
 fieldset.field input[type="radio"] {
   margin: 0;
 }
+
+/* =========================================
+   LAB4-R12: State & Badge styles (ป้ายสีสถานะ)
+   ========================================= */
+
+/* จัดกลุ่มข้อมูลในส่วนหัวของการ์ดให้อยู่บรรทัดเดียวกัน */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* ดันปุ่มลบไปอยู่ชิดขวาสุด */
+.card-header .delete-btn {
+  margin-left: auto;
+  align-self: center; /* ทับค่า align-self: start เดิม */
+}
+
+/* ดีไซน์โครงสร้างพื้นฐานของป้าย (Badge) */
+.priority, .status {
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* สีของป้าย Priority */
+.priority.urgent, .priority.high { color: #b42318; background: #feeceb; border: 1px solid #b42318; }
+.priority.normal { color: #5f7086; background: #eef4fb; border: 1px solid #c8d8eb; }
+
+/* สีของป้าย Status */
+.status.pending { color: #b45309; background: #fef3c7; border: 1px solid #fde68a; }
+.status.in-progress, .status.in_progress { color: #1d4ed8; background: #dbeafe; border: 1px solid #bfdbfe; }
+.status.completed { color: #15803d; background: #dcfce3; border: 1px solid #bbf7d0; }
+
+/* =========================================
+   LAB4-R12: Accessibility (a11y)
+   ========================================= */
+
+/* ขอบสีน้ำเงินเวลาใช้คีย์บอร์ดกด Tab (focus-visible) */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* เปลี่ยนสีขอบเป็นสีแดงเมื่อกรอกข้อมูลผิดพลาด (aria-invalid) */
+[aria-invalid="true"] {
+  border-color: var(--danger);
+  background-color: #fdf5f4;
+}
+
+/* =========================================
+   แก้ไข Radio Button ให้อยู่บรรทัดเดียวกับข้อความ
+   ========================================= */
+fieldset.field label {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-start !important;
+  width: fit-content !important;
+  gap: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+fieldset.field input[type="radio"] {
+  margin: 0;
+  width: auto; /* ไม่ให้กว้างเต็มบรรทัด */
+}

@@ -2,16 +2,16 @@ import { useState } from 'react';
 
 function TaskForm({ onAddTask }) {
   const [formData, setFormData] = useState({
-    title: '',
-    course: '',
+    requesterName: '',
+    requestType: '',
+    location: '',
     dueDate: '',
     details: '',
     priority: 'normal',
   });
 
   const [errors, setErrors] = useState({});
-
-  const [submitStatus, setSubmitStatus] = useState('null');
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,15 +23,34 @@ function TaskForm({ onAddTask }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // TODO LAB4-R05–R07: validate controlled state แล้วเรียก onAddTask
     const newErrors = {};
-    if (!formData.title.trim()) newErrors.title = "กรุณากรอก Title";
-    if (!formData.course) newErrors.course = 'กรุณาเลือก Course';
-    if (!formData.dueDate) newErrors.dueDate = 'กรุณากรอก Due Date';
-    if (!formData.details) newErrors.details = 'กรุณากรอก Details';
-    if (!formData.priority) newErrors.priority = 'กรุณาเลือก Priority';
+
+    if (!formData.requesterName?.trim() || formData.requesterName.trim().length < 2) {
+      newErrors.requesterName = 'กรุณากรอก Requester Name อย่างน้อย 2 ตัวอักษร';
+    }
+
+    if (!formData.requestType) {
+      newErrors.requestType = 'กรุณาเลือก Request Type';
+    }
+
+    if (!formData.location?.trim()) {
+      newErrors.location = 'กรุณากรอก Location';
+    }
+
+    if (!formData.dueDate) {
+      newErrors.dueDate = 'กรุณาเลือก Due Date';
+    }
+
+    if (!formData.details?.trim() || formData.details.trim().length < 10) {
+      newErrors.details = 'รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร';
+    }
+
+    if (!['normal', 'high', 'urgent'].includes(formData.priority)) {
+      newErrors.priority = 'กรุณาเลือก Priority ให้ถูกต้อง';
+    }
 
     setErrors(newErrors);
+
     if (Object.keys(newErrors).length > 0) {
       setSubmitStatus('error');
       return;
@@ -40,23 +59,26 @@ function TaskForm({ onAddTask }) {
     setSubmitStatus('success');
 
     onAddTask({
-      id: 'REQ-${Date.now().toString().slice(-4)}', // สุ่ม ID ง่ายๆ ด้วยเวลา (เช่น REQ-1234)
-      requesterName: 'ผู้ใช้งานระบบ', // TODO LAB4-R05: เปลี่ยนเป็นชื่อผู้ร้องขอจริง
-      requestType: 'formData.title', // TODO LAB4-R05: เปลี่ยนเป็นประเภทคำร้องจริง
-      location: formData.course,
+      id: `REQ-${Date.now().toString().slice(-4)}`,
+      requesterName: formData.requesterName.trim(),
+      requestType: formData.requestType,
+      location: formData.location.trim(),
       dueDate: formData.dueDate,
-      details: formData.details,
+      details: formData.details.trim(),
       priority: formData.priority,
-      status: 'pending',  //บังคับเพิ่มแบบ pending
-    })
+      status: 'pending'
+    });
 
     setFormData({
-      title: '',
-      course: '',
+      requesterName: '',
+      requestType: '',
+      location: '',
       dueDate: '',
       details: '',
       priority: 'normal'
     });
+
+    setTimeout(() => setSubmitStatus(null), 3000);
   }
 
   return (
@@ -65,20 +87,26 @@ function TaskForm({ onAddTask }) {
       <h2 id="task-form-title">Create New Task</h2>
       <form onSubmit={handleSubmit} noValidate>
         <div className="field">
-          <label htmlFor="title">Title</label>
-          <input id="title" name="title" value={formData.title} onChange={handleChange} />
-          <small className="error" id="title-error">{errors.title}</small>
+          <label htmlFor="requesterName">Requester Name</label>
+          <input id="requesterName" name="requesterName" value={formData.requesterName} onChange={handleChange} />
+          <small className="error" id="requesterName-error">{errors.requesterName}</small>
         </div>
 
         <div className="field">
-          <label htmlFor="course">Course</label>
-          <select id="course" name="course" value={formData.course} onChange={handleChange} defaultValue="">
-            <option value="">-- Select a course --</option>
-            <option value="ENGSE203">ENGSE203</option>
-            <option value="INT201">INT201</option>
-            <option value="GEN101">GEN101</option>
+          <label htmlFor="requestType">Request Type</label>
+          <select id="requestType" name="requestType" value={formData.requestType} onChange={handleChange}>
+            <option value="">-- Select Request Type --</option>
+            <option value="แจ้งซ่อม">แจ้งซ่อม</option>
+            <option value="ขอความช่วยเหลือ">ขอความช่วยเหลือ</option>
+            <option value="อื่นๆ">อื่นๆ</option>
           </select>
-          <small className="error" id="course-error">{errors.course}</small>
+          <small className="error" id="requestType-error">{errors.requestType}</small>
+        </div>
+
+        <div className="field">
+          <label htmlFor="location">Location</label>
+          <input id="location" name="location" value={formData.location} onChange={handleChange} />
+          <small className="error" id="location-error">{errors.location}</small>
         </div>
 
         <div className="field">
