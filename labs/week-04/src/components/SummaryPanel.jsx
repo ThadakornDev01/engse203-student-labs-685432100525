@@ -19,3 +19,4 @@ function SummaryPanel({ summary }) {
 }
 
 export default SummaryPanel;
+
