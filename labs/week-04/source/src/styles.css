@@ -321,3 +321,32 @@ form>button,
         transition: none !important;
     }
 }
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.workspace-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .summary-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .workspace-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    align-items: start;
+  }
+}
+
+img, input, select, textarea {
+  max-width: 100%;
+}
