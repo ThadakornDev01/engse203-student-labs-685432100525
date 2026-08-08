@@ -4,19 +4,22 @@ import RequestForm from './components/RequestForm.jsx';
 import FilterBar from './components/FilterBar.jsx';
 import RequestList from './components/RequestList.jsx';
 import { initialRequests } from './data/initialRequests.js';
+import useState from 'react';
 
 function App() {
   // TODO LAB4-R04: เปลี่ยน requests/statusFilter เป็น state
-  const requests = initialRequests;
-  const statusFilter = 'all';
+  const [requests, setRequests] = useState(initialRequests);
+  const [statusFilter, setStatusFilter] = useState('all');
 
   // TODO LAB4-R04: คำนวณ summary เป็น derived data
-  const summary = {
+const summary = {
     total: requests.length,
-    pending: 0,
-    inProgress: 0,
-    completed: 0,
+    pending: requests.filter((req) => req.status === 'pending').length,
+    inProgress: requests.filter((req) => req.status === 'in-progress').length,
+    completed: requests.filter((req) => req.status === 'completed').length,
   };
+  //ใช้ฟังก์ชัน .filter() ของ JavaScript เพื่อกรองหาเฉพาะรายการที่มี status 
+  // ตรงกับที่กำหนด แล้วต่อด้วย .length เพื่อนับจำนวนว่ามีกี่อัน
 
   // TODO LAB4-R08: คำนวณ filteredRequests จาก requests + statusFilter
   const filteredRequests = requests;

@@ -1,4 +1,4 @@
-export const initialRequests = [
+export const initialTasks = [
   {
     id: 'REQ-001',
     requesterName: 'สมชาย ใจดี',
@@ -27,4 +27,3 @@ export const initialRequests = [
     status: 'completed',
   },
 ];
-

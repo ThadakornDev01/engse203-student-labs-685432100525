@@ -1,57 +1,104 @@
-function RequestForm({ onAddRequest }) {
+import { useState } from 'react';
+
+function TaskForm({ onAddTask }) {
+  const [formData, setFormData] = useState({
+    title: '',
+    course: '',
+    dueDate: '',
+    details: '',
+    priority: 'normal',
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+  };
+
   function handleSubmit(event) {
     event.preventDefault();
-    // TODO LAB4-R05–R07: validate controlled state แล้วเรียก onAddRequest
-    onAddRequest({});
+    // TODO LAB4-R05–R07: validate controlled state แล้วเรียก onAddTask
+    const newErrors = {};
+    if (!formData.title.trim()) newErrors.title = "กรุณากรอก Title";
+    if (!formData.course) newErrors.course = 'กรุณาเลือก Course';
+    if (!formData.dueDate) newErrors.dueDate = 'กรุณากรอก Due Date';
+    if (!formData.details) newErrors.details = 'กรุณากรอก Details';
+    if (!formData.priority) newErrors.priority = 'กรุณาเลือก Priority';
+
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
+    onAddTask({
+      id: 'REQ-${Date.now().toString().slice(-4)}', // สุ่ม ID ง่ายๆ ด้วยเวลา (เช่น REQ-1234)
+      requesterName: 'นักศึกษา', // TODO LAB4-R05: เปลี่ยนเป็นชื่อผู้ร้องขอจริง
+      requestType: 'คำร้องทั่วไป', // TODO LAB4-R05: เปลี่ยนเป็นประเภทคำร้องจริง
+      location: formData.course,
+      details: formData.details,
+      priority: formData.priority,
+      status: 'pending',
+    })
+
+    setFormData({
+      title: '',
+      course: '',
+      dueDate: '',
+      details: '',
+      priority: 'normal'
+    });
   }
 
   return (
-    <section className="panel" aria-labelledby="request-form-title">
+    <section className="panel" aria-labelledby="task-form-title">
       <p className="eyebrow dark">CONTROLLED FORM</p>
-      <h2 id="request-form-title">สร้างคำร้องใหม่</h2>
+      <h2 id="task-form-title">Create New Task</h2>
       <form onSubmit={handleSubmit} noValidate>
         <div className="field">
-          <label htmlFor="requesterName">ชื่อผู้แจ้ง</label>
-          <input id="requesterName" name="requesterName" />
-          <small className="error" id="requesterName-error"></small>
+          <label htmlFor="title">Title</label>
+          <input id="title" name="title" value={formData.title} onChange={handleChange} />
+          <small className="error" id="title-error">{errors.title}</small>
         </div>
 
         <div className="field">
-          <label htmlFor="requestType">ประเภทคำร้อง</label>
-          <select id="requestType" name="requestType" defaultValue="">
-            <option value="">-- เลือกประเภท --</option>
-            <option value="แจ้งซ่อม">แจ้งซ่อม</option>
-            <option value="ขอใช้ห้อง">ขอใช้ห้อง</option>
-            <option value="บริการบัญชีผู้ใช้">บริการบัญชีผู้ใช้</option>
+          <label htmlFor="course">Course</label>
+          <select id="course" name="course" value={formData.course} onChange={handleChange} defaultValue="">
+            <option value="">-- Select a course --</option>
+            <option value="ENGSE203">ENGSE203</option>
+            <option value="INT201">INT201</option>
+            <option value="GEN101">GEN101</option>
           </select>
-          <small className="error" id="requestType-error"></small>
+          <small className="error" id="course-error">{errors.course}</small>
         </div>
 
         <div className="field">
-          <label htmlFor="location">สถานที่</label>
-          <input id="location" name="location" />
-          <small className="error" id="location-error"></small>
+          <label htmlFor="dueDate">Due Date</label>
+          <input id="dueDate" name="dueDate" type="date" value={formData.dueDate} onChange={handleChange} />
+          <small className="error" id="dueDate-error">{errors.dueDate}</small>
         </div>
 
         <div className="field">
-          <label htmlFor="details">รายละเอียด</label>
-          <textarea id="details" name="details" rows="4"></textarea>
-          <small className="error" id="details-error"></small>
+          <label htmlFor="details">Details</label>
+          <textarea id="details" name="details" rows="2" value={formData.details} onChange={handleChange}></textarea>
+          <small className="error" id="details-error">{errors.details}</small>
         </div>
 
         <fieldset className="field">
-          <legend>ความเร่งด่วน</legend>
-          <label><input type="radio" name="priority" value="normal" defaultChecked /> ปกติ</label>
-          <label><input type="radio" name="priority" value="urgent" /> เร่งด่วน</label>
-          <small className="error" id="priority-error"></small>
+          <legend>Priority</legend>
+          <label><input type="radio" name="priority" value="normal" checked={formData.priority === 'normal'} onChange={handleChange} /> Normal</label>
+          <label><input type="radio" name="priority" value="high" checked={formData.priority === 'high'} onChange={handleChange} /> High</label>
+          <small className="error" id="priority-error">{errors.priority}</small>
         </fieldset>
 
-        <button type="submit">เพิ่มคำร้อง</button>
+        <button type="submit">Add Task</button>
         <p className="status" role="status">TODO: feedback</p>
       </form>
     </section>
   );
 }
 
-export default RequestForm;
-
+export default TaskForm;
