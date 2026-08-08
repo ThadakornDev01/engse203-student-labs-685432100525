@@ -22,14 +22,21 @@ const summary = {
   // ตรงกับที่กำหนด แล้วต่อด้วย .length เพื่อนับจำนวนว่ามีกี่อัน
 
   // TODO LAB4-R08: คำนวณ filteredRequests จาก requests + statusFilter
-  const filteredRequests = requests;
+  const filteredRequests = requests.filter((request) => {
+    if (statusFilter === 'all') {
+      return true; // แสดงทุกคำร้อง
+    }
+    return request.status === statusFilter;
+  });
 
   function handleAddRequest(requestData) {
-    console.log('TODO add request', requestData);
+    setRequests((prevRequests) => [requestData, ...prevRequests]);
   }
 
   function handleDeleteRequest(requestId) {
-    console.log('TODO delete request', requestId);
+    setRequests((prevRequests) =>
+        prevRequests.filter((request) => request.id !== requestId)
+    );
   }
 
   return (
@@ -45,7 +52,7 @@ const summary = {
           <section className="panel" aria-labelledby="request-list-title">
             <div className="section-heading">
               <h2 id="request-list-title">รายการคำร้อง</h2>
-              <FilterBar value={statusFilter} onFilterChange={() => {}} />
+              <FilterBar value={statusFilter} onFilterChange={setStatusFilter} />
             </div>
             <RequestList
               requests={filteredRequests}

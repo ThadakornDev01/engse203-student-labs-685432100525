@@ -1,8 +1,15 @@
 import RequestCard from './RequestCard.jsx'; 
 
 function RequestList({ requests, onDeleteRequest }) { 
-  
   // TODO LAB4-R11: เพิ่ม empty state เมื่อ requests.length === 0
+  if (requests.length === 0) {
+    return (
+      <div className="empty-state">
+        <p>ไม่มีคำร้องที่ตรงกับเงื่อนไข</p>
+      </div>
+    );
+  }
+  
   return (
     <div className="task-list">
       {requests.map((request) => (

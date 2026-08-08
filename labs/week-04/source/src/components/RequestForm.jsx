@@ -11,6 +11,8 @@ function TaskForm({ onAddTask }) {
 
   const [errors, setErrors] = useState({});
 
+  const [submitStatus, setSubmitStatus] = useState('null');
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -31,17 +33,21 @@ function TaskForm({ onAddTask }) {
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
+      setSubmitStatus('error');
       return;
     }
 
+    setSubmitStatus('success');
+
     onAddTask({
       id: 'REQ-${Date.now().toString().slice(-4)}', // สุ่ม ID ง่ายๆ ด้วยเวลา (เช่น REQ-1234)
-      requesterName: 'นักศึกษา', // TODO LAB4-R05: เปลี่ยนเป็นชื่อผู้ร้องขอจริง
-      requestType: 'คำร้องทั่วไป', // TODO LAB4-R05: เปลี่ยนเป็นประเภทคำร้องจริง
+      requesterName: 'ผู้ใช้งานระบบ', // TODO LAB4-R05: เปลี่ยนเป็นชื่อผู้ร้องขอจริง
+      requestType: 'formData.title', // TODO LAB4-R05: เปลี่ยนเป็นประเภทคำร้องจริง
       location: formData.course,
+      dueDate: formData.dueDate,
       details: formData.details,
       priority: formData.priority,
-      status: 'pending',
+      status: 'pending',  //บังคับเพิ่มแบบ pending
     })
 
     setFormData({
@@ -95,7 +101,12 @@ function TaskForm({ onAddTask }) {
         </fieldset>
 
         <button type="submit">Add Task</button>
-        <p className="status" role="status">TODO: feedback</p>
+        {submitStatus === 'success' && (
+          <p className="status" role="status">คำร้องถูกเพิ่มเรียบร้อยแล้ว</p>
+        )}
+        {submitStatus === 'error' && (
+          <p className="status error" role="alert">กรุณากรอกข้อมูลให้ครบถ้วน</p>
+        )}
       </form>
     </section>
   );
