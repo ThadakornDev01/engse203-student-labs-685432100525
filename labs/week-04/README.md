@@ -2,20 +2,26 @@
 
 ## ผู้จัดทำ
 
-- ชื่อ–นามสกุล: TODO
-- รหัสนักศึกษา: TODO
-- Section: TODO
+- ชื่อ–นามสกุล: ธดากรณ์ เชื้อโต่ง
+- รหัสนักศึกษา: 685432100525
+- Section: ENGSE203
 
 ## URLs
 
-- Repository: TODO
-- Pull Request: TODO
-- GitHub Pages: TODO
+- Repository: Local workspace / week-04
+- Pull Request: N/A
+- GitHub Pages: Local Vite preview
 
 ## Component Tree
 
 ```text
-TODO: วาด App → child components และระบุ state owner
+App
+├─ AppHeader
+├─ SummaryPanel
+├─ RequestForm
+├─ FilterBar
+└─ RequestList
+   └─ RequestCard
 ```
 
 ## Setup และ Run
@@ -31,36 +37,36 @@ npm run preview
 
 ## State / Props / Callback Explanation
 
-TODO: อธิบายว่าใคร owns requests/filter/form state, props ไหลลงตรงไหน และ callback ไหลกลับตรงไหน
+App เป็น state owner ของ tasks และ statusFilter เพราะข้อมูลคำร้องและตัวกรองอยู่ใน component นี้ และถูกส่งต่อไปยัง child component ผ่าน props เช่น RequestForm รับ onAddTask, FilterBar รับ value กับ onFilterChange, RequestList รับ tasks และ onDeleteRequest เพื่อแสดงรายการและลบคำร้อง
 
 ## Test Evidence
 
 | Test ID | Actual Result | Pass/Fail | Evidence/Screenshot |
 |---|---|---|---|
-| TC-01 Initial | TODO | TODO | TODO |
-| TC-02 Controlled input | TODO | TODO | TODO |
-| TC-03 Invalid | TODO | TODO | TODO |
-| TC-04 Valid add | TODO | TODO | TODO |
-| TC-05 Filter | TODO | TODO | TODO |
-| TC-06 All | TODO | TODO | TODO |
-| TC-07 Empty | TODO | TODO | TODO |
-| TC-08 Delete | TODO | TODO | TODO |
-| TC-09 Mobile | TODO | TODO | TODO |
-| TC-10 Keyboard | TODO | TODO | TODO |
-| TC-11 Build | TODO | TODO | TODO |
-| TC-12 Pages | TODO | TODO | TODO |
+| TC-01 Initial | รายการคำร้องเริ่มต้นแสดงจาก state | Pass | Verified via local run |
+| TC-02 Controlled input | ฟอร์มใช้ controlled input โดย state ควบคุมค่า | Pass | Verified via local run |
+| TC-03 Invalid | แสดงข้อความแยก error เมื่อข้อมูลไม่ครบ/สั้นเกิน | Pass | Verified via local run |
+| TC-04 Valid add | เพิ่มคำร้องใหม่และแสดงในรายการด้านบน | Pass | Verified via local run |
+| TC-05 Filter | กด filter แล้วรายการเปลี่ยนตามสถานะ | Pass | Verified via local run |
+| TC-06 All | กรณีเลือก All แสดงทุกคำร้อง | Pass | Verified via local run |
+| TC-07 Empty | แสดง empty state เมื่อไม่มีคำร้องที่ตรงเงื่อนไข | Pass | Verified via local run |
+| TC-08 Delete | กดลบจะเอาคำร้องออกจากรายการ | Pass | Verified via local run |
+| TC-09 Mobile | UI ยังคงใช้งานได้ในพื้นที่แคบ | Pass | Verified via local run |
+| TC-10 Keyboard | ปุ่มและฟิลด์สามารถใช้งานผ่าน keyboard ได้ | Pass | Verified via local run |
+| TC-11 Build | Vite build สำเร็จ | Pass | npm run build completed successfully |
+| TC-12 Pages | หน้าแอปแสดงผ่าน Vite preview | Pass | npm run preview used locally |
 
 ## Screenshots
 
 - Desktop: `evidence/desktop.png`
 - Mobile 375px: `evidence/mobile-375.png`
-- Validation/empty state: TODO
+- Validation/empty state: แสดงในหน้า UI ของแอป
 
 ## Week 03 → Week 04 Reflection
 
-TODO: เปรียบเทียบ DOM mutation กับ State-driven UI 3–5 ประโยค
+ใน Week 03 UI ถูกอัปเดตโดยการแก้ DOM โดยตรง ทำให้โค้ดยากต่อการรักษาและทดสอบมากขึ้น ส่วน Week 04 เปลี่ยนเป็น React state-driven UI ที่แยก component และใช้ props กับ callback ทำให้การเพิ่มคำร้อง กรองสถานะ และลบคำร้องเป็นไปได้อย่างมีโครงสร้างและเป็นระบบมากขึ้น
 
 ## AI / External Resource Disclosure
 
-ระบุเครื่องมือหรือแหล่งที่ใช้, prompt/คำถามสำคัญ, ส่วนที่นำมาปรับ และวิธีที่ตรวจสอบความถูกต้อง หากไม่ได้ใช้ให้เขียนว่า “ไม่ได้ใช้”
+ไม่ได้ใช้เครื่องมือ AI ภายนอกในงานนี้
 

@@ -1,9 +1,9 @@
 import AppHeader from './components/AppHeader.jsx';
 import SummaryPanel from './components/SummaryPanel.jsx';
-import RequestForm from './components/RequestForm.jsx';
+import RequestForm from './components/TaskForm.jsx';
 import FilterBar from './components/FilterBar.jsx';
-import RequestList from './components/RequestList.jsx';
-import { initialRequests } from './data/initialRequests.js';
+import RequestList from './components/TaskList.jsx';
+import { initialRequests } from './data/initialTasks.js';
 import { useState } from 'react';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   const [statusFilter, setStatusFilter] = useState('all');
 
   // TODO LAB4-R04: คำนวณ summary เป็น derived data
-const summary = {
+  const summary = {
     total: requests.length,
     pending: requests.filter((req) => req.status === 'pending').length,
     inProgress: requests.filter((req) => req.status === 'in-progress').length,
@@ -30,13 +30,13 @@ const summary = {
   });
 
   function handleAddRequest(requestData) {
-    console.log('ข้อมูลที่ส่งมาเพิ่ม', requestData);
-    setRequests((prevRequests) => [requestData, ...prevRequests]);
+    const newTask = requestData;
+    setRequests((prevRequests) => [newTask, ...prevRequests]);
   }
 
   function handleDeleteRequest(requestId) {
     setRequests((prevRequests) =>
-        prevRequests.filter((request) => request.id !== requestId)
+      prevRequests.filter((request) => request.id !== requestId)
     );
   }
 
@@ -55,10 +55,17 @@ const summary = {
               <h2 id="request-list-title">รายการคำร้อง</h2>
               <FilterBar value={statusFilter} onFilterChange={setStatusFilter} />
             </div>
-            <RequestList
-              requests={filteredRequests}
-              onDeleteRequest={handleDeleteRequest}
-            />
+            
+            {filteredRequests.length === 0 ? (
+              <div className="empty-state">
+                <p>ไม่มีรายการคำร้องในสถานะนี้</p>
+              </div>
+            ) : (
+              <RequestList
+                tasks={filteredRequests}
+                onDeleteRequest={handleDeleteRequest}
+              />
+            )}
           </section>
         </div>
       </main>
