@@ -1,25 +1,25 @@
-import TaskCard from './TaskCard.jsx';
+import RequestCard from './TaskCard.jsx'; 
 
-function TaskList({ tasks, onDeleteTask }) {
+function RequestList({ tasks, onDeleteRequest }) { 
   if (tasks.length === 0) {
     return (
-      <div className="empty-state" role="status">
-        ไม่มีงานในสถานะนี้ ลองเลือกตัวกรองอื่นหรือเพิ่มงานใหม่
+      <div className="empty-state">
+        <p>ไม่มีคำร้องที่ตรงกับเงื่อนไข</p>
       </div>
     );
   }
-
+  
   return (
     <div className="task-list">
       {tasks.map((task) => (
-        <TaskCard
+        <RequestCard
           key={task.id}
-          task={task}
-          onDeleteTask={onDeleteTask}
+          request={task}
+          onDeleteRequest={onDeleteRequest}
         />
       ))}
     </div>
   );
 }
 
-export default TaskList;
+export default RequestList;

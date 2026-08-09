@@ -134,8 +134,9 @@ label {
     font-weight: 750;
 }
 
-input,
-select {
+/* ⭐️ แก้ไข: ไม่ให้ radio button กว้าง 100% */
+input:not([type="radio"]),
+select, textarea {
     width: 100%;
     padding: .75rem .8rem;
     border: 1px solid #94aac7;
@@ -146,13 +147,15 @@ select {
 
 input:focus-visible,
 select:focus-visible,
-button:focus-visible {
+button:focus-visible,
+textarea:focus-visible {
     outline: .2rem solid #f4b942;
     outline-offset: .15rem;
 }
 
 [aria-invalid="true"] {
     border-color: var(--danger);
+    background-color: #fdf5f4;
 }
 
 .error {
@@ -196,62 +199,64 @@ form>button,
     gap: .75rem;
 }
 
+/* ⭐️ อัปเดต: การ์ดเปลี่ยนมาใช้แบบคอลัมน์เพื่อให้ส่วนหัวอยู่ด้านบน */
 .task-card {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: .8rem;
+    flex-direction: column;
+    gap: .5rem;
     padding: 1rem;
     border: 1px solid var(--border);
     border-radius: .8rem;
     background: #f9fbfe;
 }
 
+/* ⭐️ เพิ่ม: โครงสร้างส่วนหัวการ์ด (มี ID, ป้ายสถานะ และปุ่มลบ) */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* ดันปุ่มลบไปขวาสุด */
+.card-header .delete-btn {
+    margin-left: auto;
+}
+
 .task-card h3 {
-    margin: .45rem 0 .2rem;
-    font-size: 1.05rem;
+    margin: 0;
+    font-size: 1.15rem;
+    color: var(--navy);
 }
 
 .task-card p {
     margin: 0;
     color: var(--muted);
+    font-size: 0.95rem;
 }
 
-.badge-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .35rem;
-}
-
-.badge {
+/* ⭐️ อัปเดต: ดีไซน์ป้ายสถานะให้ตรงกับโค้ด React (Priority และ Status) */
+.priority, .status-badge {
     display: inline-flex;
     border-radius: 999px;
-    padding: .22rem .55rem;
+    padding: .22rem .65rem;
     font-size: .78rem;
     font-weight: 800;
 }
 
-.status-todo {
-    color: #7a4f01;
-    background: #fff1c2;
-}
+/* สี Priority */
+.priority.urgent, .priority.high { color: #991b1b; background: #fee2e2; border: 1px solid #fca5a5; }
+.priority.normal { color: #475569; background: #f1f5f9; border: 1px solid #cbd5e1; }
 
-.status-doing {
-    color: #075985;
-    background: #dff3ff;
-}
+/* สี Status */
+.status-badge.pending { color: #9a3412; background: #ffedd5; border: 1px solid #fdba74; }
+.status-badge.in-progress, .status-badge.in_progress { color: #075985; background: #dff3ff; border: 1px solid #7dd3fc; }
+.status-badge.completed { color: #166534; background: #dcfce7; border: 1px solid #86efac; }
 
-.status-done {
-    color: #166534;
-    background: #dcfce7;
-}
 
-.priority-high {
-    color: #991b1b;
-    background: #fee2e2;
-}
-
-.danger-button {
+.delete-btn {
     flex: 0 0 auto;
     border: 0;
     border-radius: .55rem;
@@ -261,12 +266,33 @@ form>button,
     font-weight: 800;
 }
 
+.delete-btn:hover {
+    background: #fecaca;
+}
+
 .empty-state {
-    padding: 1.5rem;
+    padding: 2rem;
     border: 2px dashed var(--border);
     border-radius: .8rem;
     text-align: center;
     color: var(--muted);
+}
+
+/* ⭐️ เพิ่ม: แก้ไขหน้าตา Radio Button ให้อยู่บรรทัดเดียวกัน */
+fieldset.field label {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: flex-start !important;
+    width: fit-content !important;
+    gap: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+fieldset.field input[type="radio"] {
+    width: auto;
+    margin: 0;
 }
 
 @media (min-width: 48rem) {
@@ -286,7 +312,6 @@ form>button,
 }
 
 @media (prefers-reduced-motion: reduce) {
-
     *,
     *::before,
     *::after {

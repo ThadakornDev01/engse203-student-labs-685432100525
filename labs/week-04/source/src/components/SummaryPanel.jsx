@@ -1,15 +1,14 @@
-
-const summaryItems = [
-  ['total', 'ทั้งหมด'],
-  ['todo', 'ต้องทำ'],
-  ['doing', 'กำลังทำ'],
-  ['done', 'เสร็จแล้ว'],
+const items = [
+  ['total', 'Total'],
+  ['pending', 'Pending'],
+  ['inProgress', 'In Progress'],
+  ['completed', 'Completed'],
 ];
 
 function SummaryPanel({ summary }) {
   return (
-    <section className="summary-grid" aria-label="สรุปจำนวนงาน">
-      {summaryItems.map(([key, label]) => (
+    <section className="summary-grid" aria-label="Task summary">
+      {items.map(([key, label]) => (
         <article className="summary-card" key={key}>
           <span>{label}</span>
           <strong>{summary[key]}</strong>
