@@ -8,9 +8,9 @@
 
 ## URLs
 
-- Repository: Local workspace / week-04
-- Pull Request: (https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/1)
-- GitHub Pages: Local Vite preview
+- Repository: [Local vite preview](https://github.com/ThadakornDev01/engse203-student-labs-685432100525/blob/main/labs/week-04/source/src/main.jsx)
+- Pull Request: [Local vite preview](https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/1)
+- GitHub Pages: [Local Vite preview](https://thadakorndev01.github.io/engse203-student-labs-685432100525/)
 
 ## Component Tree
 
