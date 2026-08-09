@@ -5,8 +5,8 @@
   "sourceOrigin": "migrated-repository",
   "originalRepoUrl": "",
   "originalCommit": "",
-  "pullRequestUrl": "(https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/1)",
-  "submissionTag": "lab-04submission-v1",
-  "testStatus": "passed",
+  "pullRequestUrl": "https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/1",
+  "submissionTag": "lab-04-submission-v1",
+  "testStatus": "pass",
   "notes": "React/Vite build output ต้องอยู่ใน publish/ ก่อนสร้าง Pages Hub"
 }
