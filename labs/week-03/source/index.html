@@ -1,164 +1,103 @@
 <!doctype html>
 <html lang="th">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<<<<<<< HEAD
-  <title>ENGSE203 LAB 3</title>
-  <script type="module" src="/src/main.js"></script>
-=======
-  <title>ENGSE203 Pre-LAB 3</title>
-  <link rel="stylesheet" href="./style.css" />
-  <script src="./app.js" defer></script>
->>>>>>> pre-lab04/week-04
-</head>
-
-<body>
-  <header class="hero">
-    <div class="container">
-<<<<<<< HEAD
-      <p class="eyebrow">ENGSE203 • LAB 3</p>
-      <h1>Campus Service Request</h1>
-      <p>Responsive Web UI, Event and Form</p>
-    </div>
-  </header><br>
-
-  <div class="container">
-    <div class="grid cols-3">
-      <div class="card blue">
-        <h3 id="total-count">67</h3>
-        <p class="small">Total</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ENGSE203 LAB 3</title>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container">
+        <p class="eyebrow">ENGSE203 • LAB 3</p>
+        <h1>Campus Service Request</h1>
+        <p>Responsive Web UI, Event and Form</p>
       </div>
-      <div class="card yellow">
-        <h3 id="pending-count">6</h3>
-        <p class="small">Pending</p>
-      </div>
-      <div class="card green">
-        <h3 id="approved-count">7</h3>
-        <p class="small">Approved</p>
-      </div>
-    </div>
-  </div>
+    </header>
 
-  <main class="container page-grid">
-    <section class="panel" aria-labelledby="form-title">
-      <h2 id="form-title">Create Service Request</h2>
-      <form id="request-form" novalidate>
-        <div class="field">
-          <label for="name">Name (Minimum 2 characters.)</label>
-          <input id="name" name="name" type="text" placeholder="John Doe" required />
-          <small class="error" id="name-error"></small>
-        </div>
-        <div class="field">
-          <label for="category">Service Category</label>
-          <select id="category" name="category" required>
-            <option value="">-- Please select a category --</option>
-            <option value="it">IT Support</option>
-            <option value="facilities">Facility Maintenance</option>
-            <option value="library">Library Services</option>
-            <option value="admin">Administrative Support</option>
-          </select>
-          <small class="error" id="category-error"></small>
-        </div>
-        <div class="field">
-          <label for="details">Request Details</label>
-          <textarea id="details" name="details" rows="5" placeholder="Please describe your request in detail..."
-            required minlength="10"></textarea>
-          <div class="field-meta">
-            <small id="details-hint" class="hint">Minimum 10 characters.</small>
-            <small id="details-counter" class="counter" aria-live="polite">0 characters</small>
+    <main class="container page-grid">
+      <section class="panel" aria-labelledby="form-title">
+        <h2 id="form-title">Create Service Request</h2>
+        <form id="request-form" novalidate>
+          <!-- TODO 1: Requester Name field -->
+          <div class="field">
+            <label for="requester-name">Requester Name</label>
+            <input
+              id="requester-name"
+              name="requesterName"
+              type="text"
+              minlength="2"
+              placeholder="โปรดระบุชื่อของคุณ"
+              aria-describedby="requesterName-error requesterName-hint"
+              required
+            />
+            <small id="requesterName-hint" class="hint">อย่างน้อย 2 ตัวอักษร</small>
+            <small id="requesterName-error" class="error"></small>
           </div>
-          <small class="error" id="details-error"></small>
-        </div>
-        <button type="submit">Submit Request</button>
-=======
-      <p class="eyebrow">ENGSE203 • PRE-LAB 3</p>
-      <h1>Profile Card Builder</h1>
-      <p>Semantic HTML, Responsive Layout, Event และ Form</p>
-    </div>
-  </header>
 
-  <main class="container page-grid">
-    <section class="panel" aria-labelledby="form-title">
-      <h2 id="form-title">สร้างข้อมูลแนะนำตัว</h2>
-
-      <form id="profile-form" novalidate>
-        <!-- TODO 1: สร้าง field displayName พร้อม label, input, hint และ error -->
-        <div class="field">
-          <label for="display-name">ชื่อที่ต้องการแสดง</label>
-          <input id="display-name" name="displayName" type="text" minlength="2" placeholder="เช่น สมปอง ใจดี"
-            aria-describedby="displayName-hint displayName-error" required />
-          <small id="displayName-hint" class="hint">อย่างน้อย 2 ตัวอักษร</small>
-          <small id="displayName-error" class="error"></small>
-        </div>
-
-        <!-- TODO 2: สร้าง select ชื่อ learningRole -->
-        <div class="field">
-          <label for="learning-role">บทบาทที่สนใจ</label>
-          <select id="learning-role" name="learningRole" aria-describedby="learningRole-error" required>
-            <option value="">-- เลือกบทบาท --</option>
-            <option value="Frontend Developer">Frontend Developer</option>
-            <option value="Backend Developer">Backend Developer</option>
-            <option value="Full-Stack Developer">Full-Stack Developer</option>
-            <option value="UX/UI Designer">UX/UI Designer</option>
-          </select>
-          <small id="learningRole-error" class="error"></small>
-        </div>
-
-        <!-- TODO 3: สร้าง textarea ชื่อ learningGoal -->
-        <div class="field">
-          <label for="learning-goal">เป้าหมายการเรียนรู้</label>
-          <textarea id="learning-goal" name="learningGoal" rows="5" minlength="10"
-            placeholder="เช่น ต้องการสร้างเว็บที่ใช้งานได้จริงและรองรับมือถือ"
-            aria-describedby="learningGoal-hint learningGoal-error" required></textarea>
-          <div class="field-meta">
-            <small id="learningGoal-hint" class="hint">อย่างน้อย 10 ตัวอักษร</small>
-            <small id="goal-count" class="counter" aria-live="polite">0 ตัวอักษร</small>
+          <!-- TODO 2: Request Type select -->
+          <div class="field">
+            <label for="request-type">Request Type</label>
+            <select
+              id="request-type"
+              name="requestType"
+              aria-describedby="requestType-error"
+              required
+            >
+              <option value="">-- เลือกประเภทบริการ --</option>
+              <option value="IT Support">IT Support</option>
+              <option value="Facility Maintenance">Facility Maintenance (ซ่อมบำรุงอาคาร)</option>
+              <option value="Cleaning Service">Cleaning Service (แจ้งทำความสะอาด)</option>
+              <option value="Other">Other (อื่นๆ)</option>
+            </select>
+            <small id="requestType-error" class="error"></small>
           </div>
-          <small id="learningGoal-error" class="error"></small>
-        </div>
 
-        <div class="actions">
-          <button type="submit">ยืนยันข้อมูล</button>
-          <button type="reset" class="button-secondary">เริ่มใหม่</button>
-        </div>
->>>>>>> pre-lab04/week-04
-        <p id="form-status" class="status" role="status"></p>
-      </form>
-    </section>
+          <!-- TODO 3: Details textarea -->
+          <div class="field">
+            <label for="details">รายละเอียด (Details)</label>
+            <textarea
+              id="details"
+              name="details"
+              rows="5"
+              minlength="10"
+              placeholder="ระบุรายละเอียดปัญหาที่ต้องการแจ้ง"
+              aria-describedby="details-error details-hint"
+              required
+            ></textarea>
 
-    <aside class="panel preview-panel" aria-labelledby="preview-title">
-<<<<<<< HEAD
-      <h1 id="preview-title">Live Preview</h1>
-      <p id="form-status-preview" class="status" role="status">Form is empty</p>
-      <dl id="preview" aria-live="polite">
-        <div>
-          <h3>Name</h3>
-          <p id="preview-name">ยังไม่ระบุชื่อ</p>
-        </div>
-        <div>
-          <h3>Type</h3>
-          <p id="preview-type">ยังไม่เลือกประเภท</p>
-        </div>
-        <div>
-          <h3>Details</h3>
-          <p id="preview-details">ยังไม่มีรายละเอียด</p>
-        </div>
-      </dl>
-      <h3>Submitted Requests</h3>
-      <ul id="request-list" class="request-list"></ul>
-=======
-      <h2 id="preview-title">Live Preview</h2>
-      <article class="profile-card" aria-live="polite">
-        <div class="avatar" aria-hidden="true">SE</div>
-        <h3 id="preview-name">ยังไม่ระบุชื่อ</h3>
-        <p id="preview-role">ยังไม่เลือกบทบาท</p>
-        <p id="preview-goal">ยังไม่มีเป้าหมายการเรียนรู้</p>
-      </article>
->>>>>>> pre-lab04/week-04
-    </aside>
-  </main>
-</body>
+            <div class="field-meta">
+              <small id="details-hint" class="hint">กรอกอย่างน้อย 10 ตัวอักษร</small>
+              <small id="goal-count" class="counter" aria-live="polite">0 ตัวอักษร</small>
+            </div>
+            <small id="details-error" class="error"></small>
+          </div>
+          <!------------------------------------------------------------------------------------------------>
 
+          <button type="submit">Submit Request</button>
+          <p id="form-status" class="status" role="status"></p>
+        </form>
+      </section>
+
+      <aside class="panel preview-panel" aria-labelledby="preview-title">
+        <h2 id="preview-title">Live Preview</h2>
+        <dl id="preview" aria-live="polite">
+          <div>
+            <dt>Name</dt>
+            <dd id="preview-name">ยังไม่ระบุชื่อ</dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd id="preview-type">ยังไม่เลือกประเภท</dd>
+          </div>
+          <div>
+            <dt>Details</dt>
+            <dd id="preview-details">ยังไม่มีรายละเอียด</dd>
+          </div>
+        </dl>
+        <h3>Submitted Requests</h3>
+        <ul id="request-list" class="request-list"></ul>
+      </aside>
+    </main>
+  </body>
 </html>

@@ -1,101 +1,105 @@
-import './style.css';
+import "./style.css";
 
-const form = document.querySelector('#request-form');
+const form = document.querySelector("#request-form");
 
 // TODO 1: query preview/status/list elements
-const previewName = document.querySelector('#preview-name');
-const previewType = document.querySelector('#preview-type');
-const previewDetails = document.querySelector('#preview-details');
-const formStatus = document.querySelector('#form-status');
-const requestList = document.querySelector('#request-list');
+const preview = {
+  name: document.querySelector("#preview-name"),
+  type: document.querySelector("#preview-type"),
+  details: document.querySelector("#preview-details"),
+};
+
+const status = document.querySelector("#form-status");
+const requestList = document.querySelector("#request-list");
+const detailsCount = document.querySelector("#goal-count");
 
 // TODO 2: readForm()
 function readForm() {
-  return {
-    name: document.querySelector('#name').value,
-    category: document.querySelector('#category').value,
-    details: document.querySelector('#details').value
-  };
+  return Object.fromEntries(new FormData(form).entries());
 }
 
 // TODO 3: renderPreview(data)
 function renderPreview(data) {
-  previewName.textContent = data.name.trim() || 'ยังไม่ระบุชื่อ';
-
-  const categoryElement = document.querySelector('#category');
-  const selectedOption = categoryElement.options[categoryElement.selectedIndex];
-  previewType.textContent = selectedOption.value ? selectedOption.text : 'ยังไม่เลือกประเภท';
-
-  previewDetails.textContent = data.details.trim() || 'ยังไม่มีรายละเอียด';
+  preview.name.textContent = data.requesterName?.trim() || "ยังไม่ระบุชื่อ";
+  preview.type.textContent = data.requestType || "ยังไม่เลือกประเภท";
+  preview.details.textContent = data.details?.trim() || "ยังไม่มีรายละเอียด";
+  const length = data.details ? data.details.trim().length : 0;
+  detailsCount.textContent = `${length} ตัวอักษร`;
 }
 
 // TODO 4: validate(data)
 function validate(data) {
   const errors = {};
-  const trimmedName = data.name.trim();
+  if (data.requesterName.trim().length < 2) {
+    errors.requesterName = "กรุณากรอกชื่ออย่างน้อย 2 ตัวอักษร";
+  }
 
-  if (!trimmedName) {
-    errors.name = 'Name is required';
-  } else if (trimmedName.length < 2) {
-    errors.name = 'Name must be at least 2 characters long';
+  if (!data.requestType) {
+    errors.requestType = "กรุณาเลือกประเภทบริการ";
   }
-  if (!data.category) {
-    errors.category = 'Please select a category';
-  }
-  if (!data.details.trim()) {
-    errors.details = 'Request details are required';
-  } else if (data.details.length < 10) {
-    errors.details = 'Details must be at least 10 characters long';
+
+  if (data.details.trim().length < 10) {
+    errors.details = "กรุณาระบุรายละเอียดปัญหาอย่างน้อย 10 ตัวอักษร";
   }
   return errors;
 }
 
 // TODO 5: renderErrors(errors)
 function renderErrors(errors) {
-  // Clear previous errors
-  document.querySelectorAll('.error').forEach(el => el.textContent = '');
+  for (const name of ["requesterName", "requestType", "details"]) {
+    const field = form.elements[name];
+    const output = document.querySelector(`#${name}-error`);
+    const message = errors[name] ?? "";
 
-  // Display new errors
-  Object.entries(errors).forEach(([field, message]) => {
-    const errorElement = document.querySelector(`#${field}-error`);
-    if (errorElement) {
-      errorElement.textContent = message;
-    }
-  });
+    output.textContent = message;
+    field.setAttribute("aria-invalid", String(Boolean(message)));
+  }
 }
-
 // TODO 6: input and submit listeners
-
-form.addEventListener('input', () => {
+form.addEventListener("input", () => {
   const data = readForm();
   renderPreview(data);
 });
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
+function renderStatus(state, message) {
+  status.dataset.state = state;
+  status.textContent = message;
+}
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
   const data = readForm();
   const errors = validate(data);
   renderErrors(errors);
 
-  if (Object.keys(errors).length === 0) {
-    // Submit the form (simulated)
-    formStatus.textContent = 'Request submitted successfully!';
-    formStatus.classList.add('success');
-    formStatus.classList.remove('error');
-
-    // Add to request list
-    const listItem = document.createElement('li');
-    listItem.textContent = `${data.name} - ${data.category}`;
-    requestList.appendChild(listItem);
-
-    // Reset form
-    form.reset();
-    renderPreview({ name: '', category: '', details: '' });
-  } else {
-    formStatus.textContent = 'Please fix the errors above.';
-    formStatus.classList.add('error');
-    formStatus.classList.remove('success');
+  if (Object.keys(errors).length > 0) {
+    renderStatus("invalid", "กรุณาตรวจสอบและแก้ไขข้อมูลให้ถูกต้อง");
+    form.querySelector('[aria-invalid="true"]')?.focus();
+    return;
   }
+
+  renderStatus("success", `ส่งคำร้องขอรับบริการ ${data.requestType} สำเร็จ!`);
+
+  const listItem = document.createElement("li");
+  const typeDiv = document.createElement("div");
+  typeDiv.style.cssText =
+    "font-size: 0.8rem; color: var(--muted); font-weight: 800; text-transform: uppercase; margin-bottom: 0.3rem;";
+  typeDiv.textContent = data.requestType;
+  const contentDiv = document.createElement("div");
+  contentDiv.style.color = "var(--navy)";
+  const strongName = document.createElement("strong");
+  strongName.textContent = data.requesterName;
+
+  contentDiv.appendChild(strongName);
+  contentDiv.appendChild(document.createTextNode(`: ${data.details}`));
+
+  listItem.appendChild(typeDiv);
+  listItem.appendChild(contentDiv);
+  requestList.appendChild(listItem);
+  form.reset();
 });
 
-console.log('LAB 3 starter ready', form);
+renderPreview(readForm());
+
+console.log("LAB 3 starter ready", form);
