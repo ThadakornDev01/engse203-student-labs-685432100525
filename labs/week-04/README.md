@@ -9,7 +9,7 @@
 ## URLs
 
 - Repository: Local workspace / week-04
-- Pull Request: N/A
+- Pull Request: (https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/1)
 - GitHub Pages: Local Vite preview
 
 ## Component Tree
