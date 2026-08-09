@@ -3,14 +3,14 @@
 ## ผู้จัดทำ
 
 - ชื่อ–นามสกุล: ธดากรณ์ เชื้อโต่ง
-- รหัสนักศึกษา: 685432100525
-- Section: ENGSE203
+- รหัสนักศึกษา: 68543210052-5
+- Section: 2
 
 ## URLs
 
-- Repository: [Local vite preview](https://github.com/ThadakornDev01/engse203-student-labs-685432100525/blob/main/labs/week-04/source/src/main.jsx)
-- Pull Request: [Local vite preview](https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/1)
-- GitHub Pages: [Local Vite preview](https://thadakorndev01.github.io/engse203-student-labs-685432100525/)
+- Repository: https://github.com/ThadakornDev01/engse203-student-labs-685432100525/blob/main/labs/week-04/source/src/main.jsx
+- Pull Request: https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/1
+- GitHub Pages: https://thadakorndev01.github.io/engse203-student-labs-685432100525/
 
 ## Component Tree
 
@@ -43,18 +43,18 @@ App เป็น state owner ของ tasks และ statusFilter เพรา
 
 | Test ID | Actual Result | Pass/Fail | Evidence/Screenshot |
 |---|---|---|---|
-| TC-01 Initial | รายการคำร้องเริ่มต้นแสดงจาก state | Pass | Verified via local run |
-| TC-02 Controlled input | ฟอร์มใช้ controlled input โดย state ควบคุมค่า | Pass | Verified via local run |
-| TC-03 Invalid | แสดงข้อความแยก error เมื่อข้อมูลไม่ครบ/สั้นเกิน | Pass | Verified via local run |
-| TC-04 Valid add | เพิ่มคำร้องใหม่และแสดงในรายการด้านบน | Pass | Verified via local run |
-| TC-05 Filter | กด filter แล้วรายการเปลี่ยนตามสถานะ | Pass | Verified via local run |
-| TC-06 All | กรณีเลือก All แสดงทุกคำร้อง | Pass | Verified via local run |
-| TC-07 Empty | แสดง empty state เมื่อไม่มีคำร้องที่ตรงเงื่อนไข | Pass | Verified via local run |
-| TC-08 Delete | กดลบจะเอาคำร้องออกจากรายการ | Pass | Verified via local run |
-| TC-09 Mobile | UI ยังคงใช้งานได้ในพื้นที่แคบ | Pass | Verified via local run |
-| TC-10 Keyboard | ปุ่มและฟิลด์สามารถใช้งานผ่าน keyboard ได้ | Pass | Verified via local run |
-| TC-11 Build | Vite build สำเร็จ | Pass | npm run build completed successfully |
-| TC-12 Pages | หน้าแอปแสดงผ่าน Vite preview | Pass | npm run preview used locally |
+| TC-01 Initial | รายการคำร้องเริ่มต้นแสดงจาก state | Pass | [evidence/desktop.png](../week-04/evidence/desktop.png) |
+| TC-02 Controlled input | ฟอร์มใช้ controlled input โดย state ควบคุมค่า | Pass | [evidence/validation.png](../week-04/evidence/validation.png) |
+| TC-03 Invalid | แสดงข้อความแยก error เมื่อข้อมูลไม่ครบ/สั้นเกิน | Pass | [evidence/validation.png](../week-04/evidence/validation.png) |
+| TC-04 Valid add | เพิ่มคำร้องใหม่และแสดงในรายการด้านบน | Pass | [evidence/desktop.png](../week-04/evidence/desktop.png) |
+| TC-05 Filter | กด filter แล้วรายการเปลี่ยนตามสถานะ | Pass | [evidence/empty-state.png](../week-04/evidence/empty-state.png) 
+| TC-06 All | กรณีเลือก All แสดงทุกคำร้อง | Pass | [evidence/desktop.png](../week-04/evidence/desktop.png) |
+| TC-07 Empty | แสดง empty state เมื่อไม่มีคำร้องที่ตรงเงื่อนไข | Pass | [evidence/empty-state.png](../week-04/evidence/empty-state.png) |
+| TC-08 Delete | กดลบจะเอาคำร้องออกจากรายการ | Pass | [evidence/desktop.png](../week-04/evidence/desktop.png) |
+| TC-09 Mobile | UI ยังคงใช้งานได้ในพื้นที่แคบ | Pass | [evidence/mobile1.png](../week-04/evidence/mobile1.png) |
+| TC-10 Keyboard | ปุ่มและฟิลด์สามารถใช้งานผ่าน keyboard ได้ | Pass | [evidence/keyboard.png](../week-04/evidence/keyboard.png) |
+| TC-11 Build | Vite build สำเร็จ | Pass | [evidence/build.png](../week-04/evidence/build.png) |
+| TC-12 Pages | หน้าแอปแสดงผ่าน Vite preview | Pass | [evidence/pages.png](../week-04/evidence/pages.png) |
 
 ## Screenshots
 
