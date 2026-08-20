@@ -59,6 +59,12 @@ export function readStoredRequests() {
   try {
     const envelope = JSON.parse(rawValue);
     // TODO 5B-A2: ตรวจ schemaVersion และ validateRequests ให้ครบใน CP04b
+    if (envelope.schemaVersion !== SCHEMA_VERSION) {
+      return { status: 'invalid', reason: 'ข้อมูลที่บันทึกไว้ไม่ตรง schema' };
+    }
+    if (!validateRequests(envelope.requests)) {
+      return { status: 'invalid', reason: 'ข้อมูลที่บันทึกไว้ไม่ตรง schema' };
+    }
     return { status: 'valid', requests: structuredClone(envelope.requests) };
   } catch {
     return { status: 'invalid', reason: 'ข้อมูลที่บันทึกไว้ไม่ใช่ JSON ที่อ่านได้' };
@@ -75,8 +81,9 @@ export function readStoredRequests() {
  *   2. เขียน envelope ที่มี schemaVersion, updatedAt และ requests
  *   3. อย่าลืมว่าที่เก็บรับได้แต่ข้อความ
  */
+
 export function writeStoredRequests(requests) {
-  if (validateRequests(requests)) {
+  if (!validateRequests(requests)) {
     throw new Error('ไม่สามารถบันทึกข้อมูลคำร้องที่ไม่ตรง schema ได้');
   }
 

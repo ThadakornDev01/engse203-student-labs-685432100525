@@ -84,21 +84,11 @@ export async function getRequests(options = {}) {
  * ถ้าไม่พบ ให้คืน null — ห้าม throw
  * เพราะ "หาไม่เจอ" ไม่ใช่ความผิดพลาดของระบบ
  */
-// export async function getRequests(options = {}) {
-//   await waitForLabDelay();
-
-//   if (options.scenario === 'error') {
-//     throw new Error('LAB scenario: จำลองการโหลดข้อมูลไม่สำเร็จ');
-//   }
-//   if (options.scenario === 'empty') {
-//     return [];
-//   }
-
-//   //return fetchSeedRequests();
-//   return loadNormalRequests(options.onRecovery);
-
-//   // TODO 5B-3: เปลี่ยนบรรทัดข้างบนเป็น return loadNormalRequests(options.onRecovery);
-// }
+export async function getRequestById(requestId) {
+  const requests = await getRequests();
+  return requests.find((request) => request.id === requestId) ?? null;
+}
+  // TODO 5B-3: เปลี่ยนบรรทัดข้างบนเป็น return loadNormalRequests(options.onRecovery);
 
 
 /* ─────────── คาบ 5B ─────────── */
@@ -122,7 +112,7 @@ async function loadNormalRequests() {
   // TODO 5B-2b: แจ้งผู้ใช้เมื่อกู้ข้อมูลจากของเสีย (ทำใน CP04b)
   return seedRequests;
 
-   //throw new Error('TODO 5B-2: loadNormalRequests');
+  //throw new Error('TODO 5B-2: loadNormalRequests');
 }
 
 /**
@@ -168,7 +158,7 @@ export async function deleteRequest(requestId) {
  * ล้างคีย์ของ LAB05 แล้วโหลด seed ใหม่ทับ
  */
 export async function resetRequests() {
-  clearStoredRequests();    
+  clearStoredRequests();
   const seedRequests = await fetchSeedRequests();
   writeStoredRequests(seedRequests);
   return structuredClone(seedRequests);

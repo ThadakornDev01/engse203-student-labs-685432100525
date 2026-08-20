@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import ErrorState from '../components/ErrorState.jsx';
 import LoadingState from '../components/LoadingState.jsx';
 import useManualReload from '../hooks/useManualReload.js';
-// import { getRequestById } from '../services/requestService.js';
+import { getRequestById } from '../services/requestService.js';
 
 function RequestDetailPage() {
   const { requestId } = useParams();
