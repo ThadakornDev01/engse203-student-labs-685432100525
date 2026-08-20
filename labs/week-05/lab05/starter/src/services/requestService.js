@@ -1,4 +1,3 @@
-  import initialRequests from '../../public/data/initialRequests.json';
 /**
  * requestService.js — ชั้นเข้าถึงข้อมูล
  *
@@ -72,10 +71,8 @@ export async function getRequests(options = {}) {
     return [];
   }
 
-  // TODO 5A-2: return fetchSeedRequests();
-  // TODO 5B-3: เปลี่ยนบรรทัดข้างบนเป็น return loadNormalRequests(options.onRecovery);
-  // throw new Error('TODO 5A-2: getRequests normal flow');
   return fetchSeedRequests();
+  // TODO 5B-3: เปลี่ยนบรรทัดข้างบนเป็น return loadNormalRequests(options.onRecovery);
 }
 
 /**
@@ -86,8 +83,8 @@ export async function getRequests(options = {}) {
  * เพราะ "หาไม่เจอ" ไม่ใช่ความผิดพลาดของระบบ
  */
 export async function getRequestById(requestId) {
-  void requestId;
-  throw new Error('TODO 5A-3: getRequestById');
+  const requests = await getRequests();
+  return requests.find((request) => request.id === requestId) ?? null;
 }
 
 /* ─────────── คาบ 5B ─────────── */
