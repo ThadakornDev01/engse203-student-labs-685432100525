@@ -6,7 +6,7 @@ import LoadingState from '../components/LoadingState.jsx';
 import RequestList from '../components/RequestList.jsx';
 import SummaryPanel from '../components/SummaryPanel.jsx';
 import useManualReload from '../hooks/useManualReload.js';
-import { getRequests } from '../services/requestService.js';
+import { getRequests, deleteRequest, resetRequestsest } from '../services/requestService.js';
 
 function DashboardPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -53,14 +53,25 @@ function DashboardPage() {
     else reload();
   }
 
-  function handleDelete(requestId) {
-    setRequests((current) => current.filter((request) => request.id !== requestId));
-    setNotice(`ลบคำร้อง ${requestId} ในหน่วยความจำแล้ว — refresh จะกลับมา`);
-  }
+  // function handleDelete(requestId) {
+  // const next = await deleteRequest(requestId);
+  // setRequests(next);
+  // setNotice(`ลบคำร้อง ${requestId} แล้ว`);
+  // }
+
+  // async function handleReset() {
+  // if (!window.confirm('คืนค่าข้อมูลตัวอย่างเริ่มต้น และลบคำร้องที่เพิ่มไว้ทั้งหมด?')) return;
+  // const seedRequests = await resetRequests();
+  // setRequests(seedRequests);
+  // setStatusFilter('all');
+  // setNotice('คืนค่าข้อมูลตัวอย่างเรียบร้อยแล้ว');
+  // }
+
 
   return (
     <section data-testid="page-dashboard">
       <div className="page-heading">
+        
         <div>
           <p className="eyebrow dark">ROUTED · READ PATH</p>
           <h1>Dashboard</h1>
