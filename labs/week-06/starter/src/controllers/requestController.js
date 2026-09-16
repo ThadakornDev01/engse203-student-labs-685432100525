@@ -1,4 +1,5 @@
 import * as service from '../services/requestService.js';
+import * as requestService from "../services/requestService.js";
 
 /**
  * controller รู้จัก req/res และเป็นคนตัดสิน status code
@@ -11,8 +12,8 @@ import * as service from '../services/requestService.js';
  * - ตอบ 200 พร้อมรายการ
  */
 export function listRequests(req, res) {
-  const {status} = req.query;
-  res.status(200).json(service.findAll({status}));
+  const { status } = req.query;
+  res.status(200).json(service.findAll({ status }));
 }
 
 
@@ -45,8 +46,25 @@ export function createRequest(req, res) {
  * - status ที่รับได้: 'pending' | 'in-progress' | 'completed'
  * - status ไม่ถูกต้อง → 400 · ไม่พบคำร้อง → 404 · สำเร็จ → 200
  */
-export function updateRequestStatus(req, res) {
-  throw new Error('TODO W06-C4: updateRequestStatus');
+export async function updateRequestStatus(req, res) {
+  const allowedStatuses = ["pending", "in-progress", "completed"];
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!allowedStatuses.includes(status)) {
+    return res.status(400).json({
+      error: "status ต้องเป็น pending, in-progress หรือ completed"
+    });
+  }
+    const updatedRequest = await requestService.updateRequestStatus(id,status);
+
+  if (!updatedRequest) {
+    return res.status(404).json({
+      error: `ไม่พบคำร้องรหัส ${id}`
+    });
+  }
+
+  return res.status(200).json(updatedRequest);
 }
 
 /**
