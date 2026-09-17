@@ -1,0 +1,12 @@
+{
+  "week": "week-06",
+  "title": "Node.js / Express API Foundation",
+  "status": "submitted",
+  "sourceOrigin": "migrated-repository",
+  "originalRepoUrl": "",
+  "originalCommit": "",
+  "pullRequestUrl": "https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/3",
+  "submissionTag": "lab-06-submission-v1",
+  "testStatus": "pass",
+  "notes": "Static site ต้องมี index.html ที่ publish root"
+}
