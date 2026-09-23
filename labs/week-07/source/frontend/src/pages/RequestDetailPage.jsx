@@ -27,6 +27,18 @@ function RequestDetailPage() {
     return () => { ignore = true; };
   }, [requestId, reloadKey]);
 
+  async function handleChangeStatus(nextStatus) {
+  setUpdating(true);
+  try {
+    const updated = await updateRequestStatus(request.id, nextStatus);
+    setRequest(updated);
+  } catch (error) {
+    setError(error.message);
+  } finally {
+    setUpdating(false);
+  }
+}
+
   return (
     <section data-testid="page-request-detail">
       <div className="page-heading"><div><p className="eyebrow dark">DYNAMIC ROUTE</p><h1>รายละเอียดคำร้อง</h1><p>Request ID: <code>{requestId}</code></p></div></div>
