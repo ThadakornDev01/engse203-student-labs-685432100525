@@ -1,0 +1,1 @@
+# npm run add:lab -- week-xx "( ชื่อ week ต่างๆ)"
