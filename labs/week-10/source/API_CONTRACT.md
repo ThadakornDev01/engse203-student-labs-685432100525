@@ -1,11 +1,45 @@
 # API Contract — Campus Service Request API
 
-**เวอร์ชัน:** 2.0.0 · **Base URL:** `http://localhost:3001`
+**เวอร์ชัน:** 2.2.0 · **Base URL:** `http://localhost:3001`
 **รูปแบบข้อมูล:** JSON (`Content-Type: application/json`)
 
 > **API Contract คืออะไร** — ข้อตกลงระหว่างคนทำ front-end กับคนทำ back-end
 > ว่าจะคุยกันด้วย endpoint อะไร ส่งอะไรไป ได้อะไรกลับ
 > มีไว้เพื่อให้สองฝั่ง**ทำงานคู่ขนานกันได้** โดยไม่ต้องรอกัน
+
+---
+
+## Data Model / ฐานข้อมูล
+
+ฐานข้อมูลประกอบด้วย `users` และ `requests` ซึ่งมีความสัมพันธ์แบบหนึ่งต่อหลาย: ผู้ใช้หนึ่งคนแจ้งคำร้องได้หลายรายการ และแต่ละคำร้องอ้างถึงผู้ใช้หนึ่งคนผ่าน `requests.requester_id` → `users.id`.
+
+| ตาราง | คอลัมน์ | ชนิดและข้อกำหนด |
+|---|---|---|
+| `users` | `id` | INTEGER, Primary Key, AUTOINCREMENT |
+| `users` | `name`, `department` | TEXT, NOT NULL |
+| `users` | `email` | TEXT, NOT NULL, UNIQUE |
+| `requests` | `id` | TEXT, Primary Key |
+| `requests` | `requester_id` | INTEGER, NOT NULL, Foreign Key → `users.id` |
+| `requests` | `request_type`, `location`, `details` | TEXT, NOT NULL |
+| `requests` | `priority` | TEXT, NOT NULL, DEFAULT `normal`, CHECK: `low`, `normal`, `urgent` |
+| `requests` | `status` | TEXT, NOT NULL, DEFAULT `pending`, CHECK: `pending`, `in-progress`, `completed` |
+| `requests` | `created_at` | TEXT, NOT NULL, DEFAULT เวลาปัจจุบัน |
+
+### รูปแบบฐานข้อมูลกับข้อมูลที่ API ส่งออก
+
+ฐานข้อมูลเก็บ `requester_id` ซึ่งเป็นเลขอ้างอิงผู้ใช้ เพื่อลดการเก็บชื่อซ้ำในคำร้อง ส่วน API ส่ง `requesterName` ซึ่งเป็นชื่อที่ frontend ต้องการ Service ใช้ `JOIN` ระหว่าง `requests` กับ `users` และตั้งชื่อคอลัมน์ด้วย `AS requesterName` เพื่อแปลงจากรูปแบบในฐานข้อมูลเป็นรูปแบบของ API.
+
+### พฤติกรรมของ POST ที่ควรรู้
+
+เมื่อ POST คำร้อง Service จะค้นหา `requesterName` ใน `users` ก่อน ถ้าพบจะใช้ `users.id` เดิม แต่ถ้าไม่พบจะสร้างผู้ใช้ใหม่โดยอัตโนมัติ (`department` เป็น `ไม่ระบุ` และสร้างอีเมลตามรหัสเวลา) แล้วจึงสร้างคำร้องที่อ้างถึงผู้ใช้นั้น ดังนั้นการส่งชื่อใหม่หรือชื่อที่สะกดต่างจากเดิมอาจเพิ่ม user record ใหม่ในฐานข้อมูลได้ ผู้เรียก API ควรทราบผลข้างเคียงนี้ก่อนส่งข้อมูล.
+
+## ประวัติการเปลี่ยนแปลง
+
+| เวอร์ชัน | การเปลี่ยนแปลง |
+|---|---|
+| 2.0.0 | เอกสาร API Contract สำหรับ endpoints และรูปแบบข้อมูล |
+| 2.1.0 | เพิ่ม Data Model, อธิบายการแปลงรูปแบบฐานข้อมูล/API และบันทึกพฤติกรรม POST ที่สร้างผู้ใช้ใหม่อัตโนมัติ |
+| 2.2.0 | เพิ่ม endpoints สำหรับดูผู้ใช้และคำร้องของผู้ใช้ |
 
 ---
 
@@ -30,6 +64,8 @@
 | Method | Endpoint | คำอธิบาย | Request body | สำเร็จ | ผิดพลาด |
 |---|---|---|---|---|---|
 | `GET` | `/api/requests` | ดูคำร้องทั้งหมด | — | `200` + array | — |
+| `GET` | `/api/users` | ดูผู้ใช้ทั้งหมด | — | `200` + array | — |
+| `GET` | `/api/users/:id/requests` | ดูคำร้องของผู้ใช้ | — | `200` + array | `404` ไม่พบผู้ใช้ |
 | `GET` | `/api/requests?status=` | กรองตามสถานะ | — | `200` + array | — |
 | `GET` | `/api/requests/:id` | ดูคำร้องใบเดียว | — | `200` + object | `404` ไม่พบ |
 | `POST` | `/api/requests` | สร้างคำร้องใหม่ | Request (ไม่ต้องมี `id`, `status`) | `201` + object ที่สร้าง | `400` ข้อมูลไม่ถูกต้อง |
