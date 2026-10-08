@@ -98,8 +98,11 @@ export function findById(id) {
 /** สร้างรหัสคำร้องถัดไป เช่น REQ-006 */
 function nextId() {
   // รหัสถัดไป = จำนวนคำร้องที่มีอยู่ + 1  (ปรับให้เรียบง่ายขึ้นในรุ่นนี้)
-  const { total } = db.prepare('SELECT COUNT(*) AS total FROM requests').get();
-  return `REQ-${String(total + 1).padStart(3, '0')}`;
+  const row = db.prepare(
+    "SELECT id FROM requests WHERE id LIKE 'REQ-%' ORDER BY id DESC LIMIT 1"
+  ).get();
+  const n = row ? Number(String(row.id).replace('REQ-', '')) + 1 : 1;
+  return `REQ-${String(n).padStart(3, '0')}`;
 }
 
 /**
@@ -111,7 +114,7 @@ function resolveUserId(name) {
   if (found) return found.id;
   const slug = Date.now().toString(36);
   return db.prepare('INSERT INTO users (name, department, email) VALUES (?, ?, ?)')
-           .run(name, 'ไม่ระบุ', `user-${slug}@rmutl.ac.th`).lastInsertRowid;
+    .run(name, 'ไม่ระบุ', `user-${slug}@rmutl.ac.th`).lastInsertRowid;
 }
 
 export function create(input) {
@@ -125,7 +128,7 @@ export function create(input) {
       `INSERT INTO requests (id, requester_id, request_type, location, details, priority)
        VALUES (?, ?, ?, ?, ?, ?)`
     ).run(id, requesterId, input.requestType,
-          input.location.trim(), input.details.trim(), input.priority ?? 'normal');
+      input.location.trim(), input.details.trim(), input.priority ?? 'normal');
     db.exec('COMMIT');
   } catch (err) {
     db.exec('ROLLBACK');
