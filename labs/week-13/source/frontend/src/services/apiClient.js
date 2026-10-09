@@ -3,7 +3,8 @@
  * ทุกฟังก์ชันใน requestService เรียกผ่านตรงนี้
  */
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
+  ?? (import.meta.env.PROD ? '' : 'http://localhost:3001');
 export const AUTH_TOKEN_KEY = 'engse203-campus-token';
 
 /** error ที่รู้ว่ามาจาก API พร้อม status ที่ได้กลับมา */
