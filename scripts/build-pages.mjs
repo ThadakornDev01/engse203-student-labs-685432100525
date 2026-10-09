@@ -51,6 +51,7 @@ for (const week of labs) {
   const sourceUrl = `${repoUrl}/tree/main/labs/${week}/source`;
   const prUrl = validHttpUrl(metadata.pullRequestUrl);
   const pageUrl = `${pagesBase}/labs/${week}/`;
+  const viewResultUrl = validHttpUrl(metadata.resultUrl) || `labs/${week}/`;
   const sourceCount = (await meaningfulEntries(path.join(labRoot, "source"))).length;
   const summary = { ...metadata, pageUrl, sourceUrl, hasPublish, sourceEntries: sourceCount };
   summaries.push(summary);
@@ -59,8 +60,8 @@ for (const week of labs) {
   cards.push(`<article class="lab-card" data-status="${escapeHtml(metadata.status)}">
     <div class="card-top"><span class="week">${escapeHtml(week)}</span><span class="status">${escapeHtml(statusLabels[metadata.status] ?? metadata.status)}</span></div>
     <h2>${escapeHtml(metadata.title)}</h2>
-    <p>Test: <strong>${escapeHtml(metadata.testStatus)}</strong> • ${hasPublish ? "Web output" : "Evidence report"}</p>
-    <div class="links"><a class="primary" href="labs/${escapeHtml(week)}/">View Result</a><a href="${escapeHtml(sourceUrl)}">Source</a>${prUrl ? `<a href="${escapeHtml(prUrl)}">Pull Request</a>` : ""}</div>
+    <p>Test: <strong>${escapeHtml(metadata.testStatus)}</strong> • ${hasPublish || validHttpUrl(metadata.resultUrl) ? "Web output" : "Evidence report"}</p>
+    <div class="links"><a class="primary" href="${escapeHtml(viewResultUrl)}">View Result</a><a href="${escapeHtml(sourceUrl)}">Source</a>${prUrl ? `<a href="${escapeHtml(prUrl)}">Pull Request</a>` : ""}</div>
     <small>Version: ${escapeHtml(metadata.submissionTag || "not submitted")}</small>
   </article>`);
 }

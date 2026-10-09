@@ -1,12 +1,12 @@
 {
   "week": "week-13",
   "title": "(week-13-quality-security)",
-  "status": "draft",
+  "status": "submitted",
   "sourceOrigin": "course-starter",
   "originalRepoUrl": "",
   "originalCommit": "",
-  "pullRequestUrl": "",
-  "submissionTag": "",
-  "testStatus": "not-tested",
+  "pullRequestUrl": "https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/12",
+  "submissionTag": "lab-13-submission-v1",
+  "testStatus": "pass",
   "notes": ""
 }
