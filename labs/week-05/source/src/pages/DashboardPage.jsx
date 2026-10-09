@@ -18,24 +18,24 @@ function DashboardPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [errorMessage, setErrorMessage] = useState('');
   const [notice, setNotice] = useState('');
-  getRequests({ scenario, onRecovery: setNotice })
-
   useEffect(() => {
     setLoadState('loading');
     setErrorMessage('');
-    setNotice('');
+    let active = true;
 
-    getRequests({ scenario })
+    getRequests({ scenario, onRecovery: setNotice })
       .then((data) => {
+        if (!active) return;
         setRequests(data);
         setLoadState('success');
       })
       .catch((error) => {
+        if (!active) return;
         setErrorMessage(error instanceof Error ? error.message : 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ');
         setLoadState('error');
       });
 
-    // TODO 5B: เพิ่ม cleanup guard เพื่อกัน stale update
+    return () => { active = false; };
   }, [scenario, reloadKey]);
 
   const summary = useMemo(() => ({
@@ -56,7 +56,6 @@ function DashboardPage() {
 
   async function handleDelete(requestId) {
     const next = await deleteRequest(requestId);
-    deleteRequest(requestId);
     setRequests(next);
     setNotice(`ลบคำร้อง ${requestId} แล้ว`);
   }

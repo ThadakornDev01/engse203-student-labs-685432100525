@@ -16,17 +16,21 @@ function RequestDetailPage() {
   useEffect(() => {
     setLoadState('loading');
     setErrorMessage('');
+    let active = true;
 
     getRequestById(requestId)
       .then((result) => {
+        if (!active) return;
         setRequest(result);
         setLoadState('success');
       })
       .catch((error) => {
+        if (!active) return;
         setErrorMessage(error instanceof Error ? error.message : 'โหลดรายละเอียดไม่สำเร็จ');
         setLoadState('error');
       });
-    // TODO 5B: เพิ่ม cleanup guard เพื่อกัน stale update
+
+    return () => { active = false; };
   }, [requestId, reloadKey]);
 
   return (
@@ -69,4 +73,3 @@ function RequestDetailPage() {
 }
 
 export default RequestDetailPage;
-
