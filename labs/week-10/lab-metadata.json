@@ -8,5 +8,5 @@
   "pullRequestUrl": "https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/11",
   "submissionTag": "lab-10-submission-v1",
   "testStatus": "pass",
-  "notes": "Metadata เพิ่มเพื่อให้ Pages Hub สร้างได้; งานยังเป็น draft"
+  "notes": "Frontend build ผ่านและเชื่อมต่อ API บน Render"
 }
