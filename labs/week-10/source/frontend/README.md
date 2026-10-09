@@ -1,6 +1,6 @@
-# ENGSE203 LAB05 — Campus Service Request
+# ENGSE203 LAB10 — Full-Stack Campus Service
 
-Reference implementation สำหรับ Phase W5-D (Instructor Private)
+Frontend สำหรับ Campus Service Request; API และ SQLite อยู่ใน `../api`.
 
 ## Run
 

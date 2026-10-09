@@ -5,12 +5,12 @@
   "sourceOrigin": "course-starter",
   "originalRepoUrl": "",
   "originalCommit": "",
-  "pullRequestUrl": "",
+  "pullRequestUrl": "https://github.com/ThadakornDev01/engse203-student-labs-685432100525/pull/11",
   "submissionTag": "",
   "testStatus": "not-tested",
   "notes": "Metadata เพิ่มเพื่อให้ Pages Hub สร้างได้; งานยังเป็น draft",
   "pageUrl": "https://ThadakornDev01.github.io/engse203-student-labs-685432100525/labs/week-10/",
   "sourceUrl": "https://github.com/ThadakornDev01/engse203-student-labs-685432100525/tree/main/labs/week-10/source",
-  "hasPublish": false,
+  "hasPublish": true,
   "sourceEntries": 5
 }
